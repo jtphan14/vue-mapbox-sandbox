@@ -3,6 +3,7 @@
   "description": "Vue Build Application",
   "version": "0.1.0",
   "dependencies": {
+    "mapbox-gl": "^0.37.0",
     "vue-build": "^0.50.0"
   }
 }

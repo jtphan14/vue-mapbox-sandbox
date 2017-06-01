@@ -23,7 +23,7 @@
     },
 
     components: {
-      navComponent
+      navComponent,
     }
   }
 </script>
