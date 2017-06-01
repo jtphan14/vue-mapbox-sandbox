@@ -17,9 +17,7 @@
     },
 
     computed: {
-      contextMessage () {
-        return `${this.message} Now go build something!`
-      }
+
     },
 
     components: {
@@ -31,12 +29,6 @@
 <template>
   <div id="app">
     <div class="header">
-      <div class="logo">
-        <img :src="logo" />ue-build
-      </div>
-      <div class="tagline">
-        {{contextMessage}}
-      </div>
     </div>
     <div class="main">
       <navComponent />
