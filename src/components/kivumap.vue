@@ -1,5 +1,7 @@
 <script>
   import Mapbox from 'mapbox-gl-vue'
+  import Vue from 'vue'
+
   const mapboxgl = require('mapbox-gl')
 
   export default {
@@ -71,6 +73,43 @@
       },
       mapClicked(map, e){
         console.log('Map Clicked!')
+        this.addPopUp(map, e)
+      },
+      addPopUp(map, e) {
+        console.log('e', e);
+        const features = map.queryRenderedFeatures(e.point, {
+          layers: ['points']
+        });
+        if (!features.length) {
+          return;
+        }
+        console.log('features', features)
+
+        const feature = features[0];
+
+        const popupContent = Vue.extend({
+          template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
+            data: function () {
+              return {
+                firstName: 'Walter',
+                lastName: 'White',
+                alias: 'Heisenberg'
+              }
+            }
+          });
+
+        console.log('popUpContent', popupContent);
+        console.log('coordinates', feature.geometry.coordinates);
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        const popup = new mapboxgl.Popup()
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML('<div id="vue-popup-content"><div id="vue-popup">POPUP</div></div>')
+          .addTo(map);
+        //
+        //   console.log('popup', popup);
+        new popupContent().$mount('#test');
+        // console.log('popupContent', newPopupContent);
       }
     }
   }
@@ -78,8 +117,10 @@
 
 <template>
   <div id="map" class="map">
+      <div id="test"></div>
     <mapbox
     @map-load="mapLoaded"
+    @map-click="mapClicked"
     access-token="pk.eyJ1IjoiZmlmdHlhbmRmaWZ0eSIsImEiOiJjajFxdjVibmswMGptMndyaW5vb2VoOHBsIn0.aD863YaLh6B8Mg2cRgdl1Q"
     :map-options="{
       style: 'mapbox://styles/fiftyandfifty/cj3g6it5p00122rnyetxu6rrq',
