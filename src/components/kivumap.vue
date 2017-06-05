@@ -29,7 +29,8 @@
             'type': 'geojson',
             'data': {
               'type': 'FeatureCollection',
-              'features': [{
+              'features': [
+                {
                 'type': 'Feature',
                 'geometry': {
                   'type': 'Point',
@@ -88,27 +89,39 @@
         const feature = features[0];
 
         const popupContent = Vue.extend({
-          template: '<p>{{firstName}} {{lastName}} aka {{alias}}</p>',
-            data: function () {
-              return {
-                firstName: 'Walter',
-                lastName: 'White',
-                alias: 'Heisenberg'
-              }
+            render: function(createElement){
+              return createElement(
+              'div',   // tag name
+                [
+                  createElement('h1', feature.properties.title),
+                ]
+              )
+            },
+            methods: {
+                popupClicked() {
+                    alert('Popup Clicked!');
+                },
+            },
+            created: function(){
+              console.log('popupContent created')
+            },
+            mounted: function(){
+              console.log('popupContent mounted')
             }
-          });
-
-        console.log('popUpContent', popupContent);
-        console.log('coordinates', feature.geometry.coordinates);
+        });
         // Populate the popup and set its coordinates
         // based on the feature found.
         const popup = new mapboxgl.Popup()
           .setLngLat(feature.geometry.coordinates)
-          .setHTML('<div id="vue-popup-content"><div id="vue-popup">POPUP</div></div>')
+          .setHTML('<div id="vue-popup-content"><div id="vue-popup" class="vue-popup">POPUP</div></div>')
           .addTo(map);
         //
         //   console.log('popup', popup);
-        new popupContent().$mount('#test');
+        new popupContent().$mount('#vue-popup-content');
+
+        // console.log('component', component);
+        //
+        // document.getElementById('vue-popup-content').appendChild(component.$el)
         // console.log('popupContent', newPopupContent);
       }
     }
@@ -117,7 +130,9 @@
 
 <template>
   <div id="map" class="map">
-      <div id="test"></div>
+      <div id="test"><div id="test-2">
+
+      </div></div>
     <mapbox
     @map-load="mapLoaded"
     @map-click="mapClicked"
