@@ -82,14 +82,16 @@ h1, h2, h3, h4, h5 { margin: 0 0 10px 0; }
   	height: 500px;
   }
   .mapboxgl-popup {
-    background-color: red;
+    // background-color: red;
   }
   .mapboxgl-popup-content{
     // background-color: blue;
-    width: 100px;
+    width: 200px;
   }
   .vue-popup{
-    width: 400px;
-    color: red;
+    width: 150px;
+    color: black;
+    font-size: 10px;
+    font-weight: 400;
   }
 }

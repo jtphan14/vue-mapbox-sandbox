@@ -1,6 +1,8 @@
 <script>
   import Mapbox from 'mapbox-gl-vue'
-  import Vue from 'vue'
+  import Vue from 'vue/dist/vue.js'
+  // import incidentComponent from './incident.vue'
+  // import navComponent from './nav.vue'
 
   const mapboxgl = require('mapbox-gl')
 
@@ -31,36 +33,84 @@
               'type': 'FeatureCollection',
               'features': [
                 {
-                'type': 'Feature',
-                'geometry': {
-                  'type': 'Point',
-                  'coordinates': [-77.03238901390978, 38.913188059745586]
+                "type": "Feature",
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [
+                    "145.70383700",
+                    "-38.52436600"
+                  ]
                 },
-                'properties': {
-                  'title': 'Mapbox DC',
-                  'icon': 'monument'
+                "properties": {
+                  "incident_id": 8,
+                  "hash": "vCTNuJQr1c",
+                  "title": "Sample Title",
+                  "start_date_time": "2017-12-11 00:00:00",
+                  "end_date_time": "2018-03-26 00:00:00",
+                  "status": "0",
+                  "location_details": null,
+                  "total_victims": 313,
+                  "verification_rating": 5
+                },
+                "types": {
+                  "data": [
+                    {
+                      "type_id": 1,
+                      "name": "Violent Deaths"
+                    },
+                    {
+                      "type_id": 2,
+                      "name": "Rape"
+                    },
+                    {
+                      "type_id": 3,
+                      "name": "Clash"
+                    },
+                    {
+                      "type_id": 4,
+                      "name": "Abduction"
+                    },
+                    {
+                      "type_id": 5,
+                      "name": "Recruitment"
+                    },
+                    {
+                      "type_id": 6,
+                      "name": "Kidnap for Ransom"
+                    },
+                    {
+                      "type_id": 7,
+                      "name": "Returning"
+                    },
+                    {
+                      "type_id": 8,
+                      "name": "Destruction of Property"
+                    }
+                  ]
                 }
-              }, {
-                  'type': 'Feature',
-                  'geometry': {
-                    'type': 'Point',
-                    'coordinates': [-122.414, 37.776]
-                  },
-                  'properties': {
-                    'title': 'Mapbox SF',
-                    'icon': 'harbor'
-                  }
-                }, {
-                  'type': 'Feature',
-                  'geometry': {
-                    'type': 'Point',
-                    'coordinates': [-117.158633, 32.709384]
-                  },
-                  'properties': {
-                    'title': 'Fifty and Fifty',
-                    'icon': 'harbor'
-                  }
-                }]
+              }
+                // , {
+                //   'type': 'Feature',
+                //   'geometry': {
+                //     'type': 'Point',
+                //     'coordinates': [-122.414, 37.776]
+                //   },
+                //   'properties': {
+                //     'title': 'Mapbox SF',
+                //     'icon': 'harbor'
+                //   }
+                // }, {
+                //   'type': 'Feature',
+                //   'geometry': {
+                //     'type': 'Point',
+                //     'coordinates': [-117.158633, 32.709384]
+                //   },
+                //   'properties': {
+                //     'title': 'Fifty and Fifty',
+                //     'icon': 'harbor'
+                //   }
+                // }
+              ]
             }
           },
           'layout': {
@@ -68,7 +118,11 @@
             'text-field': '{title}',
             'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
             'text-offset': [0, 0.6],
-            'text-anchor': 'top'
+            'text-anchor': 'top',
+            'text-transform': 'uppercase'
+          },
+          "paint": {
+            "text-opacity": 0.7,
           }
         });
       },
@@ -84,18 +138,23 @@
         if (!features.length) {
           return;
         }
-        console.log('features', features)
 
         const feature = features[0];
+        console.log('features', feature)
+
+        const title = feature.properties.title;
+        const date = feature.properties.start_date_time;
+        const total_victims = feature.properties.total_victims;
 
         const popupContent = Vue.extend({
-            render: function(createElement){
-              return createElement(
-              'div',   // tag name
-                [
-                  createElement('h1', feature.properties.title),
-                ]
-              )
+
+            template: '#template-name',
+            data: function () {
+              return {
+                title: title,
+                date: date,
+                total_victims: total_victims
+              }
             },
             methods: {
                 popupClicked() {
