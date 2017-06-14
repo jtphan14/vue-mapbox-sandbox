@@ -52,42 +52,6 @@
                   "total_victims": 313,
                   "verification_rating": 5
                 },
-                "types": {
-                  "data": [
-                    {
-                      "type_id": 1,
-                      "name": "Violent Deaths"
-                    },
-                    {
-                      "type_id": 2,
-                      "name": "Rape"
-                    },
-                    {
-                      "type_id": 3,
-                      "name": "Clash"
-                    },
-                    {
-                      "type_id": 4,
-                      "name": "Abduction"
-                    },
-                    {
-                      "type_id": 5,
-                      "name": "Recruitment"
-                    },
-                    {
-                      "type_id": 6,
-                      "name": "Kidnap for Ransom"
-                    },
-                    {
-                      "type_id": 7,
-                      "name": "Returning"
-                    },
-                    {
-                      "type_id": 8,
-                      "name": "Destruction of Property"
-                    }
-                  ]
-                }
               }
                 // , {
                 //   'type': 'Feature',

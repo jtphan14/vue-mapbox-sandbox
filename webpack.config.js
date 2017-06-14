@@ -8,7 +8,7 @@ module.exports = {
       'src': projectRoot + '/src',
       'images': projectRoot + '/src/assets/images',
       'scss': projectRoot + '/src/assets/scss',
-      vue: 'vue/dist/vue.js'
+      // vue: 'vue/dist/vue.js'
     }
   }
 }
