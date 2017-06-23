@@ -1,4 +1,4 @@
-$app-width: 800px;
+// $app-width: 800px;
 
 html {
   height: 100%;
@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5 { margin: 0 0 10px 0; }
 #app {
   display: flex;
   flex-direction: column;
-  width: $app-width;
+  // width: $app-width;
   margin: 0 auto;
 
   .header {
@@ -79,13 +79,19 @@ h1, h2, h3, h4, h5 { margin: 0 0 10px 0; }
   }
   #map{
   	width: 100%;
-  	height: 500px;
+  	height: 800px;
   }
   .mapboxgl-popup {
-    background-color: red;
+    // background-color: red;
   }
   .mapboxgl-popup-content{
     // background-color: blue;
-    width: 100px;
+    width: 200px;
   }
+  // .vue-popup{
+  //   width: 150px;
+  //   color: black;
+  //   font-size: 10px;
+  //   font-weight: 400;
+  // }
 }
