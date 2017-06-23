@@ -62,14 +62,33 @@
         "type": "circle",
         "paint": {
           'circle-radius': {
-            "property": 'verification_rating',
+            "type": "exponential",
+            // "default": 10,
+            // "property": 'verification_rating',
             "stops": [
-              [0, 10],
-              [1, 20],
-              [2, 30],
-              [3, 40],
-              [4, 50],
-              [5, 60],
+
+              //Property
+                // [0, .5],
+                // [1, 20],
+                // [2, 30],
+                // [3, 40],
+                // [4, 50],
+
+              //Zoom
+              [10, 10],
+              [20, 20],
+
+              // zoom is 0 and "rating" is 0 -> circle radius will be 0px
+                // [{zoom: 0, value: 1}, .5],
+                //
+                // // zoom is 0 and "rating" is 5 -> circle radius will be 5px
+                // [{zoom: 10, value: 1}, 20],
+                //
+                // // zoom is 20 and "rating" is 0 -> circle radius will be 0px
+                // [{zoom: 0, value: 2}, 20],
+                //
+                // // zoom is 20 and "rating" is 5 -> circle radius will be 20px
+                // [{zoom: 10, value: 2}, 30]
             ]
             },
 
@@ -957,6 +976,23 @@
         console.log('Map Clicked!')
         this.addPopUp(map, e)
       },
+      mapZoomend(map, e){
+        console.log('map zoomed');
+
+        console.log('zoome', map.getZoom())
+
+        var zoom = map.getZoom()
+        var layer = map.getLayer('markers')
+        console.log('layer', map.getLayer('markers'))
+
+        // layer.setRadius(1000)
+
+        if (zoom > 10){
+          console.log('greater than 10')
+
+          // layer.setRadius(1000)
+        }
+      },
       addPopUp(map, e) {
         console.log('e', e);
         const features = map.queryRenderedFeatures(e.point, {
@@ -1021,6 +1057,7 @@
     <mapbox
     @map-load="mapLoaded"
     @map-click="mapClicked"
+    @map-zoomend="mapZoomend"
     access-token="pk.eyJ1IjoiZmlmdHlhbmRmaWZ0eSIsImEiOiJjajFxdjVibmswMGptMndyaW5vb2VoOHBsIn0.aD863YaLh6B8Mg2cRgdl1Q"
     :map-options="{
       style: 'mapbox://styles/mapbox/streets-v8',
