@@ -61,20 +61,24 @@
         "source": "markers",
         "type": "circle",
         "paint": {
-            "circle-radius": {
-              property: 'verification_rating',
-              "stops": [
-                  [15, 10],
-                  [17, 20],
-                  [20, 70]
-              ]
+          'circle-radius': {
+            "property": 'verification_rating',
+            "stops": [
+              [0, 10],
+              [1, 20],
+              [2, 30],
+              [3, 40],
+              [4, 50],
+              [5, 60],
+            ]
             },
+
             'circle-color': {
-              property: 'verification_rating',
-              stops: [
+              "property": 'verification_rating',
+              "stops": [
                 [0, '#fa946e'],
                 [1, '#c091e6'],
-                [2, '#fa946e  '],
+                [2, '#fa946e'],
                 [3, '#c091e6'],
                 [4, '#c091e6'],
                 [5, '#c091e6'],
@@ -1020,8 +1024,8 @@
     access-token="pk.eyJ1IjoiZmlmdHlhbmRmaWZ0eSIsImEiOiJjajFxdjVibmswMGptMndyaW5vb2VoOHBsIn0.aD863YaLh6B8Mg2cRgdl1Q"
     :map-options="{
       style: 'mapbox://styles/mapbox/streets-v8',
-      center: [-122.420679, 37.772537],
-    	zoom: 3
+      zoom: 12,
+      center: [-122.447303, 37.753574]
     }">
   </mapbox>
   </div>
