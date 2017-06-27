@@ -63,52 +63,47 @@
         "paint": {
           'circle-radius': {
             "type": "exponential",
-            // "default": 10,
             "property": 'verification_rating',
             "stops": [
 
-              //Property
-                // [0, .5],
-                // [1, 20],
-                // [2, 30],
-                // [3, 40],
-                // [4, 50],
+              //Property based circle-radius
+              // "verification_rating" is 0 -> circle radius will be .5px
+
+              // [0, .5],
+              // [1, 20],
+              // [2, 30],
+              // [3, 40],
+              // [4, 50],
 
               //Zoom
+              //zoom is 10 -> cirlce radius will be 10px
               // [10, 10],
               // [20, 20],
 
+              // zoom is 0 and "verification_rating" is 1 -> circle radius will be 10px
               [{zoom: 0,  value: 1},   10],
+              // zoom is 0 and "verification_rating" is 2 -> circle radius will be 20px
               [{zoom: 0,  value: 2},   20],
+              // zoom is 10 and "verification_rating" is 1 -> circle radius will be 10px
               [{zoom: 10,  value: 1},   10],
+              // zoom is 10 and "verification_rating" is 2 -> circle radius will be 20px
               [{zoom: 10,  value: 2},   20],
 
-
-              // zoom is 0 and "rating" is 0 -> circle radius will be 0px
-                // [{zoom: 0, value: 1}, .5],
-                //
-                // // zoom is 0 and "rating" is 5 -> circle radius will be 5px
-                // [{zoom: 10, value: 1}, 20],
-                //
-                // // zoom is 20 and "rating" is 0 -> circle radius will be 0px
-                // [{zoom: 0, value: 2}, 20],
-                //
-                // // zoom is 20 and "rating" is 5 -> circle radius will be 20px
-                // [{zoom: 10, value: 2}, 30]
             ]
-            },
+          },
+          'circle-color': {
+            "property": 'verification_rating',
+            "stops": [
 
-            'circle-color': {
-              "property": 'verification_rating',
-              "stops": [
-                [0, '#fa946e'],
-                [1, '#c091e6'],
-                [2, '#fa946e'],
-                [3, '#c091e6'],
-                [4, '#c091e6'],
-                [5, '#c091e6'],
-              ]
-            }
+              //Verification radius 0 -> circle color will be #fa946e
+              [0, '#fa946e'],
+              [1, '#c091e6'],
+              [2, '#fa946e'],
+              [3, '#c091e6'],
+              [4, '#c091e6'],
+              [5, '#c091e6'],
+            ]
+          }
         }
       });
         // map.addLayer({
