@@ -64,7 +64,7 @@
           'circle-radius': {
             "type": "exponential",
             // "default": 10,
-            // "property": 'verification_rating',
+            "property": 'verification_rating',
             "stops": [
 
               //Property
@@ -75,8 +75,14 @@
                 // [4, 50],
 
               //Zoom
-              [10, 10],
-              [20, 20],
+              // [10, 10],
+              // [20, 20],
+
+              [{zoom: 0,  value: 1},   10],
+              [{zoom: 0,  value: 2},   20],
+              [{zoom: 10,  value: 1},   10],
+              [{zoom: 10,  value: 2},   20],
+
 
               // zoom is 0 and "rating" is 0 -> circle radius will be 0px
                 // [{zoom: 0, value: 1}, .5],
