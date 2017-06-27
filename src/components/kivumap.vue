@@ -82,12 +82,12 @@
 
               // zoom is 0 and "verification_rating" is 1 -> circle radius will be 10px
               [{zoom: 0,  value: 1},   10],
-              // zoom is 0 and "verification_rating" is 2 -> circle radius will be 20px
-              [{zoom: 0,  value: 2},   20],
-              // zoom is 10 and "verification_rating" is 1 -> circle radius will be 10px
-              [{zoom: 10,  value: 1},   10],
-              // zoom is 10 and "verification_rating" is 2 -> circle radius will be 20px
-              [{zoom: 10,  value: 2},   20],
+              // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
+              [{zoom: 0,  value: 2},   5],
+              // zoom is 10 and "verification_rating" is 1 -> circle radius will be 20px
+              [{zoom: 2,  value: 1},   20],
+              // zoom is 10 and "verification_rating" is 2 -> circle radius will be 10px
+              [{zoom: 2,  value: 2},   10],
 
             ]
           },
@@ -1061,7 +1061,10 @@
     @map-zoomend="mapZoomend"
     access-token="pk.eyJ1IjoiZmlmdHlhbmRmaWZ0eSIsImEiOiJjajFxdjVibmswMGptMndyaW5vb2VoOHBsIn0.aD863YaLh6B8Mg2cRgdl1Q"
     :map-options="{
-      style: 'mapbox://styles/mapbox/streets-v8',
+      //Default Styles
+      /*style: 'mapbox://styles/mapbox/streets-v8',*/
+      //Fifty and Fifty Style
+      style: 'mapbox://styles/fiftyandfifty/cj3xi1sjt1kdh2rmzd0rngkpu',
       zoom: 12,
       center: [-122.447303, 37.753574]
     }">
