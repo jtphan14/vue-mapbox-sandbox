@@ -38,8 +38,13 @@
                 },
                 "properties": {
                     "title": "Mapbox DC",
-                    "marker-symbol": "monument",
-                    "verification_rating": 1
+                    "verification_rating": 1,
+                    "start_date_time": "2017-12-11 00:00:00",
+                    "end_date_time": "2018-03-26 00:00:00",
+                    "status": "0",
+                    "location_details": null,
+                    "total_victims": 313,
+
                 }
             }, {
                 "type": "Feature",
@@ -49,8 +54,68 @@
                 },
                 "properties": {
                     "title": "Mapbox SF",
-                    "marker-color": "#ff00ff",
-                    "verification_rating": 2
+                    "verification_rating": 2,
+                    "start_date_time": "2017-12-11 00:00:00",
+                    "end_date_time": "2018-03-26 00:00:00",
+                    "status": "0",
+                    "location_details": null,
+                    "total_victims": 103,
+                }
+              }, {
+                "type": "Feature",
+                   "geometry": {
+                       "type": "Point",
+                       "coordinates": [
+                           "161.09136200",
+                           "15.44289800"
+                       ]
+                   },
+                   "properties": {
+                       "incident_id": 5496,
+                       "hash": "28NYZTGJhf",
+                       // "title": "Dolor id aliquid animi ipsum vitae cum consequatur.",
+                       "start_date_time": {
+                           "date": "2017-12-27 00:00:00.000000",
+                           "timezone_type": 3,
+                           "timezone": "UTC"
+                       },
+                       "end_date_time": {
+                           "date": "2018-08-01 00:00:00.000000",
+                           "timezone_type": 3,
+                           "timezone": "UTC"
+                       },
+                       "status": "2",
+                       "location_details": null,
+                       "total_victims": 417,
+                       "verification_rating": 4
+                   },
+                }, {
+                  "type": "Feature",
+                     "geometry": {
+                         "type": "Point",
+                         "coordinates": [
+                             "21.96661600",
+                             "-12.61068000"
+                         ]
+                     },
+                     "properties": {
+                         "incident_id": 6336,
+                         "hash": "PCfbmoKETt",
+                         "title": "Asperiores perferendis est corrupti vel non animi laudantium aspernatur.",
+                         "start_date_time": {
+                             "date": "2017-12-27 00:00:00.000000",
+                             "timezone_type": 3,
+                             "timezone": "UTC"
+                         },
+                         "end_date_time": {
+                             "date": "2018-08-01 00:00:00.000000",
+                             "timezone_type": 3,
+                             "timezone": "UTC"
+                         },
+                         "status": "0",
+                         "location_details": null,
+                         "total_victims": 573,
+                         "verification_rating": 2
                 }
             }]
         }
@@ -63,7 +128,7 @@
         "paint": {
           'circle-radius': {
             "type": "exponential",
-            "property": 'verification_rating',
+            "property": 'total_victims',
             "stops": [
 
               //Property based circle-radius
@@ -74,6 +139,8 @@
               // [2, 30],
               // [3, 40],
               // [4, 50],
+              // [100, 5],
+              // [200, 10],
 
               //Zoom
               //zoom is 10 -> cirlce radius will be 10px
@@ -81,13 +148,19 @@
               // [20, 20],
 
               // zoom is 0 and "verification_rating" is 1 -> circle radius will be 10px
-              [{zoom: 0,  value: 1},   10],
+              // [{zoom: 0,  value: 1},  .5],
               // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
-              [{zoom: 0,  value: 2},   5],
+              [{zoom: 0,  value: 100},   5],
+              // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
+              [{zoom: 0,  value: 200},   20],
+              // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
+              // [{zoom: 0,  value: 500},   50],
               // zoom is 10 and "verification_rating" is 1 -> circle radius will be 20px
-              [{zoom: 2,  value: 1},   20],
+              // [{zoom: 2,  value: 1},   .4],
               // zoom is 10 and "verification_rating" is 2 -> circle radius will be 10px
-              [{zoom: 2,  value: 2},   10],
+              [{zoom: 2,  value: 100},   10],
+              [{zoom: 2,  value: 200},   4.8],
+              // [{zoom: 2,  value: 200},   2.8],
 
             ]
           },
