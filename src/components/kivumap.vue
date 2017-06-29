@@ -176,6 +176,19 @@
               [4, '#c091e6'],
               [5, '#c091e6'],
             ]
+          },
+          'circle-blur': {
+            "property": 'verification_rating',
+            "stops": [
+
+              //Verification radius 0 -> circle color will be #fa946e
+              [0, 0],
+              [1, 0.2],
+              [2, 0.4],
+              [3, 0.6],
+              [4, 0.8],
+              [5, 1],
+            ]
           }
         }
       });
