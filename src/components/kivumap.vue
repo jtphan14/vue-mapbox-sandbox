@@ -1,12 +1,21 @@
 <script>
   import Mapbox from 'mapbox-gl-vue'
   import Vue from 'vue/dist/vue.js'
+  import incidents from 'src/assets/js/incidents'
+  const _ = require('lodash');
+
   // import incidentComponent from './incident.vue'
   // import navComponent from './nav.vue'
 
   const mapboxgl = require('mapbox-gl')
 
   export default {
+    data () {
+      return {
+        incidents: [],
+        incidentLocations: []
+      }
+    },
     props: {
       accessToken: {
         Type: String,
@@ -20,178 +29,257 @@
     components: {
       'mapbox': Mapbox
     },
+    created() {
+      let self = this;
+
+      // self.incidentList();
+    },
     methods: {
+      incidentList(map){
+
+        incidents.getIncidents();
+
+        console.log('this.incidents', this.incidents)
+
+        const incidentList = incidents.getIncidents()
+
+
+        const promise      = incidentList.then((response) => {
+          const { data } = response
+
+          console.log('data', data)
+          this.incidents = data
+
+          this.sortIncidents(map)
+          //
+          // console.log('this.incidents', this.incidents)
+          return data
+        })
+      },
+      sortIncidents(map){
+
+        const incidents = this.incidents;
+
+        console.log('incidents sort4ed', incidents)
+
+         const geometry = _.each(incidents, function(incident){
+           return incident.geometry
+         })
+        // console.log('this.inicidents', this.incidents)
+
+        this.incidentLocations = geometry;
+
+        this.mapAddSource(map)
+        console.log('incidentLocations', this.incidentLocations)
+
+        return geometry
+      },
+      mapAddSource(map){
+        console.log('map!!', map)
+
+        const geometry = this.incidentLocations;
+
+        console.log('geometry', geometry)
+
+
+        map.addSource("markers", {
+          "type": "geojson",
+          "data": {
+              "type": "FeatureCollection",
+              "features": geometry
+          }
+        });
+
+        map.addLayer({
+            "id": "markers",
+            "source": "markers",
+            "type": "circle",
+          });
+      },
       mapLoaded(map) {
         console.log('Map Loaded!')
 
         console.log('map', map)
 
-        map.addSource("markers", {
-        "type": "geojson",
-        "data": {
-            "type": "FeatureCollection",
-            "features": [{
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [-77.03238901390978, 38.913188059745586]
-                },
-                "properties": {
-                    "title": "Mapbox DC",
-                    "verification_rating": 1,
-                    "start_date_time": "2017-12-11 00:00:00",
-                    "end_date_time": "2018-03-26 00:00:00",
-                    "status": "0",
-                    "location_details": null,
-                    "total_victims": 313,
 
-                }
-            }, {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [-122.414, 37.776]
-                },
-                "properties": {
-                    "title": "Mapbox SF",
-                    "verification_rating": 2,
-                    "start_date_time": "2017-12-11 00:00:00",
-                    "end_date_time": "2018-03-26 00:00:00",
-                    "status": "0",
-                    "location_details": null,
-                    "total_victims": 103,
-                }
-              }, {
-                "type": "Feature",
-                   "geometry": {
-                       "type": "Point",
-                       "coordinates": [
-                           "161.09136200",
-                           "15.44289800"
-                       ]
-                   },
-                   "properties": {
-                       "incident_id": 5496,
-                       "hash": "28NYZTGJhf",
-                       // "title": "Dolor id aliquid animi ipsum vitae cum consequatur.",
-                       "start_date_time": {
-                           "date": "2017-12-27 00:00:00.000000",
-                           "timezone_type": 3,
-                           "timezone": "UTC"
-                       },
-                       "end_date_time": {
-                           "date": "2018-08-01 00:00:00.000000",
-                           "timezone_type": 3,
-                           "timezone": "UTC"
-                       },
-                       "status": "2",
-                       "location_details": null,
-                       "total_victims": 417,
-                       "verification_rating": 4
-                   },
-                }, {
-                  "type": "Feature",
-                     "geometry": {
-                         "type": "Point",
-                         "coordinates": [
-                             "21.96661600",
-                             "-12.61068000"
-                         ]
-                     },
-                     "properties": {
-                         "incident_id": 6336,
-                         "hash": "PCfbmoKETt",
-                         "title": "Asperiores perferendis est corrupti vel non animi laudantium aspernatur.",
-                         "start_date_time": {
-                             "date": "2017-12-27 00:00:00.000000",
-                             "timezone_type": 3,
-                             "timezone": "UTC"
-                         },
-                         "end_date_time": {
-                             "date": "2018-08-01 00:00:00.000000",
-                             "timezone_type": 3,
-                             "timezone": "UTC"
-                         },
-                         "status": "0",
-                         "location_details": null,
-                         "total_victims": 573,
-                         "verification_rating": 2
-                }
-            }]
-        }
-    });
+        const geometry = this.geometry;
 
-    map.addLayer({
-        "id": "markers",
-        "source": "markers",
-        "type": "circle",
-        "paint": {
-          'circle-radius': {
-            "type": "exponential",
-            "property": 'total_victims',
-            "stops": [
+        console.log('geometry', geometry)
 
-              //Property based circle-radius
-              // "verification_rating" is 0 -> circle radius will be .5px
+        this.incidentList(map)
+        // this.mapAddSource(map)
+        // map.addSource("markers", {
+        // "type": "geojson",
+        // "data": {
+        //     "type": "FeatureCollection",
+        //     "features": geometry
+        // }
+    // });
+    //     map.addSource("markers", {
+    //     "type": "geojson",
+    //     "data": {
+    //         "type": "FeatureCollection",
+    //         "features": [{
+    //             "type": "Feature",
+    //             "geometry": {
+    //                 "type": "Point",
+    //                 "coordinates": [-77.03238901390978, 38.913188059745586]
+    //             },
+    //             "properties": {
+    //                 "title": "Mapbox DC",
+    //                 "verification_rating": 1,
+    //                 "start_date_time": "2017-12-11 00:00:00",
+    //                 "end_date_time": "2018-03-26 00:00:00",
+    //                 "status": "0",
+    //                 "location_details": null,
+    //                 "total_victims": 313,
+    //             }
+    //         }, {
+    //             "type": "Feature",
+    //             "geometry": {
+    //                 "type": "Point",
+    //                 "coordinates": [-122.414, 37.776]
+    //             },
+    //             "properties": {
+    //                 "title": "Mapbox SF",
+    //                 "verification_rating": 2,
+    //                 "start_date_time": "2017-12-11 00:00:00",
+    //                 "end_date_time": "2018-03-26 00:00:00",
+    //                 "status": "0",
+    //                 "location_details": null,
+    //                 "total_victims": 103,
+    //             }
+    //           }, {
+    //             "type": "Feature",
+    //                "geometry": {
+    //                    "type": "Point",
+    //                    "coordinates": [
+    //                        "161.09136200",
+    //                        "15.44289800"
+    //                    ]
+    //                },
+    //                "properties": {
+    //                    "incident_id": 5496,
+    //                    "hash": "28NYZTGJhf",
+    //                    // "title": "Dolor id aliquid animi ipsum vitae cum consequatur.",
+    //                    "start_date_time": {
+    //                        "date": "2017-12-27 00:00:00.000000",
+    //                        "timezone_type": 3,
+    //                        "timezone": "UTC"
+    //                    },
+    //                    "end_date_time": {
+    //                        "date": "2018-08-01 00:00:00.000000",
+    //                        "timezone_type": 3,
+    //                        "timezone": "UTC"
+    //                    },
+    //                    "status": "2",
+    //                    "location_details": null,
+    //                    "total_victims": 417,
+    //                    "verification_rating": 4
+    //                },
+    //             }, {
+    //               "type": "Feature",
+    //                  "geometry": {
+    //                      "type": "Point",
+    //                      "coordinates": [
+    //                          "21.96661600",
+    //                          "-12.61068000"
+    //                      ]
+    //                  },
+    //                  "properties": {
+    //                      "incident_id": 6336,
+    //                      "hash": "PCfbmoKETt",
+    //                      "title": "Asperiores perferendis est corrupti vel non animi laudantium aspernatur.",
+    //                      "start_date_time": {
+    //                          "date": "2017-12-27 00:00:00.000000",
+    //                          "timezone_type": 3,
+    //                          "timezone": "UTC"
+    //                      },
+    //                      "end_date_time": {
+    //                          "date": "2018-08-01 00:00:00.000000",
+    //                          "timezone_type": 3,
+    //                          "timezone": "UTC"
+    //                      },
+    //                      "status": "0",
+    //                      "location_details": null,
+    //                      "total_victims": 573,
+    //                      "verification_rating": 2
+    //             }
+    //         }]
+    //     }
+    // });
 
-              // [0, .5],
-              // [1, 20],
-              // [2, 30],
-              // [3, 40],
-              // [4, 50],
-              // [100, 5],
-              // [200, 10],
-
-              //Zoom
-              //zoom is 10 -> cirlce radius will be 10px
-              // [10, 10],
-              // [20, 20],
-
-              // zoom is 0 and "verification_rating" is 1 -> circle radius will be 10px
-              // [{zoom: 0,  value: 1},  .5],
-              // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
-              [{zoom: 0,  value: 100},   5],
-              // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
-              [{zoom: 0,  value: 200},   20],
-              // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
-              // [{zoom: 0,  value: 500},   50],
-              // zoom is 10 and "verification_rating" is 1 -> circle radius will be 20px
-              // [{zoom: 2,  value: 1},   .4],
-              // zoom is 10 and "verification_rating" is 2 -> circle radius will be 10px
-              [{zoom: 2,  value: 100},   10],
-              [{zoom: 2,  value: 200},   4.8],
-              // [{zoom: 2,  value: 200},   2.8],
-
-            ]
-          },
-          'circle-color': {
-            "property": 'verification_rating',
-            "stops": [
-
-              //Verification radius 0 -> circle color will be #fa946e
-              [0, '#fa946e'],
-              [1, '#c091e6'],
-              [2, '#fa946e'],
-              [3, '#c091e6'],
-              [4, '#c091e6'],
-              [5, '#c091e6'],
-            ]
-          },
-          'circle-blur': {
-            "property": 'verification_rating',
-            "stops": [
-
-              //Verification radius 0 -> circle color will be #fa946e
-              [0, 0],
-              [1, 0.2],
-              [2, 0.4],
-              [3, 0.6],
-              [4, 0.8],
-              [5, 1],
-            ]
-          }
-        }
-      });
+    // map.addLayer({
+    //     "id": "markers",
+    //     "source": "markers",
+    //     "type": "circle",
+    //     "paint": {
+    //       'circle-radius': {
+    //         "type": "exponential",
+    //         "property": 'total_victims',
+    //         "stops": [
+    //
+    //           //Property based circle-radius
+    //           // "verification_rating" is 0 -> circle radius will be .5px
+    //
+    //           // [0, .5],
+    //           // [1, 20],
+    //           // [2, 30],
+    //           // [3, 40],
+    //           // [4, 50],
+    //           // [100, 5],
+    //           // [200, 10],
+    //
+    //           //Zoom
+    //           //zoom is 10 -> cirlce radius will be 10px
+    //           // [10, 10],
+    //           // [20, 20],
+    //
+    //           // zoom is 0 and "verification_rating" is 1 -> circle radius will be 10px
+    //           // [{zoom: 0,  value: 1},  .5],
+    //           // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
+    //           [{zoom: 0,  value: 100},   5],
+    //           // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
+    //           [{zoom: 0,  value: 200},   20],
+    //           // zoom is 0 and "verification_rating" is 2 -> circle radius will be 5px
+    //           // [{zoom: 0,  value: 500},   50],
+    //           // zoom is 10 and "verification_rating" is 1 -> circle radius will be 20px
+    //           // [{zoom: 2,  value: 1},   .4],
+    //           // zoom is 10 and "verification_rating" is 2 -> circle radius will be 10px
+    //           [{zoom: 2,  value: 100},   10],
+    //           [{zoom: 2,  value: 200},   4.8],
+    //           // [{zoom: 2,  value: 200},   2.8],
+    //
+    //         ]
+    //       },
+    //       'circle-color': {
+    //         "property": 'verification_rating',
+    //         "stops": [
+    //
+    //           //Verification radius 0 -> circle color will be #fa946e
+    //           [0, '#fa946e'],
+    //           [1, '#c091e6'],
+    //           [2, '#fa946e'],
+    //           [3, '#c091e6'],
+    //           [4, '#c091e6'],
+    //           [5, '#c091e6'],
+    //         ]
+    //       },
+    //       'circle-blur': {
+    //         "property": 'verification_rating',
+    //         "stops": [
+    //
+    //           //Verification radius 0 -> circle color will be #fa946e
+    //           [0, 0],
+    //           [1, 0.2],
+    //           [2, 0.4],
+    //           [3, 0.6],
+    //           [4, 0.8],
+    //           [5, 1],
+    //         ]
+    //       }
+    //     }
+    //   });
         // map.addLayer({
         //   'id': 'points',
         //   'type': 'circle',
@@ -1060,28 +1148,28 @@
         // });
       },
       mapClicked(map, e){
-        console.log('Map Clicked!')
+        // console.log('Map Clicked!')
         this.addPopUp(map, e)
       },
       mapZoomend(map, e){
-        console.log('map zoomed');
-
-        console.log('zoome', map.getZoom())
+        // console.log('map zoomed');
+        //
+        // console.log('zoome', map.getZoom())
 
         var zoom = map.getZoom()
         var layer = map.getLayer('markers')
-        console.log('layer', map.getLayer('markers'))
+        // console.log('layer', map.getLayer('markers'))
 
         // layer.setRadius(1000)
 
         if (zoom > 10){
-          console.log('greater than 10')
+          // console.log('greater than 10')
 
           // layer.setRadius(1000)
         }
       },
       addPopUp(map, e) {
-        console.log('e', e);
+        // console.log('e', e);
         const features = map.queryRenderedFeatures(e.point, {
           layers: ['markers']
         });
@@ -1143,6 +1231,7 @@
   <div id="map" class="map">
     <mapbox
     @map-load="mapLoaded"
+    @map-addSource="mapAddSource"
     @map-click="mapClicked"
     @map-zoomend="mapZoomend"
     access-token="pk.eyJ1IjoiZmlmdHlhbmRmaWZ0eSIsImEiOiJjajFxdjVibmswMGptMndyaW5vb2VoOHBsIn0.aD863YaLh6B8Mg2cRgdl1Q"
