@@ -29,25 +29,6 @@
       navComponent,
     },
     methods: {
-      incidentList(){
-
-        incidents.getIncidents();
-
-        const promise    = incidentList.then(function(response){
-          const { data } = response
-          this.incidents = data
-
-          console.log('this.incidents', this.incidents)
-          return data
-        })
-      },
-      // anotherMethod() {
-      //   this.incidentList('blah').then((data) => {
-      //
-      //     console.log('data', data)
-      //       this.incidents = data;
-      //   });
-      // }
     }
   }
 </script>

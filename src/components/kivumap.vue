@@ -59,11 +59,16 @@
 
         _.each(incidents, function(incident){
 
-           const types = incident.types.data;
+           const types  = incident.types.data;
+           const actors = incident.actors.data;
 
            const incidentTypes =  _.map(types, function(type){
              return type.name
            })
+          //  
+          //  const actors =  _.map(actors, function(actors){
+          //    return type.name
+          //  })
 
 
           //  const incidentPoint = {

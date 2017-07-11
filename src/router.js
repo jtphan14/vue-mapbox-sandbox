@@ -1,6 +1,6 @@
 import welcome from './components/welcome.vue'
 import about from './components/about.vue'
-import kivumap from './components/kivumap.vue'
+import mapwrapper from './components/mapwrapper.vue'
 
 export default {
   mode: 'history',
@@ -9,6 +9,6 @@ export default {
   routes: [
     {path: '/', component: welcome},
     {path: '/about', component: about},
-    {path: '/kivumap', component: kivumap}
+    {path: '/mapwrapper', component: mapwrapper}
   ]
 }
