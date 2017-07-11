@@ -65,6 +65,21 @@
              return type.name
            })
 
+
+          //  const incidentPoint = {
+          //      "type": "Feature",
+          //      "geometry": incident.geometry,
+          //      "properties": {
+          //            "ID": incident.properties.incident_id,
+          //            "incident_types": incidentTypes,
+          //            "start_date_time": incident.properties.start_date_time.date,
+          //            "end_date_time": incident.properties.end_date_time.date,
+          //            "location_details": incident.properties.location_details,
+          //            "total_victims": incident.properties.total_victims,
+          //            "primary_incident_type" : incidentTypes[0],
+          //            "verification_rating" : incident.properties.verification_rating
+          //      }
+          //  }
            const incidentPoint = {
                "type": "Feature",
                "geometry": incident.geometry,
@@ -75,8 +90,9 @@
                      "end_date_time": incident.properties.end_date_time.date,
                      "location_details": incident.properties.location_details,
                      "total_victims": incident.properties.total_victims,
-
-
+                     "primary_incident_type" : "Rape",
+                    //  "primary_incident_type" : incidentTypes[0],
+                     "verification_rating" : incident.properties.verification_rating
                }
            }
 
@@ -111,6 +127,35 @@
             "id": "markers",
             "source": "markers",
             "type": "circle",
+            "paint": {
+              'circle-color': {
+                  // "property": 'verification_rating',
+                  // "stops": [
+                  //
+                  //   //Verification radius 0 -> circle color will be #fa946e
+                    // [0, '#fa946e'],
+                    // [1, '#c091e6'],
+                    // [2, '#fa946e'],
+                    // [3, '#c091e6'],
+                    // [4, '#c091e6'],
+                    // [5, '#c091e6'],
+                  // ]
+
+                  "property": 'primary_incident_type',
+
+                  type: 'categorical',
+
+                  "stops": [
+                    //Verification radius 0 -> circle color will be #fa946e
+                    ["Violent Deaths", '#fa946e'],
+                    ["Rape", '#c091e6'],
+                    // ["Clash", '#fa946e'],
+                    // ["Abduction", '#c091e6'],
+                    // ["Recruitment", '#c091e6'],
+                    // ["Riots", '#c091e6'],
+                  ]
+                },
+            }
           });
 
       },
@@ -228,9 +273,6 @@
 
         console.log('properties', properties);
 
-        // const title = feature.properties.title;
-        // const date = feature.properties.start_date_time;
-        // const total_victims = feature.properties.total_victims;
 
         const popupContent = Vue.extend({
 
@@ -262,13 +304,8 @@
           .setHTML('<div id="vue-popup-content"><div id="vue-popup" class="vue-popup">POPUP</div></div>')
           .addTo(map);
         //
-        //   console.log('popup', popup);
         new popupContent().$mount('#vue-popup-content');
 
-        // console.log('component', component);
-        //
-        // document.getElementById('vue-popup-content').appendChild(component.$el)
-        // console.log('popupContent', newPopupContent);
       }
     }
   }
