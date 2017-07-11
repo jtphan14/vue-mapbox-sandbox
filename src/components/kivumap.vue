@@ -39,54 +39,94 @@
 
         incidents.getIncidents();
 
-        console.log('this.incidents', this.incidents)
-
         const incidentList = incidents.getIncidents()
 
-
         const promise      = incidentList.then((response) => {
+
           const { data } = response
 
-          console.log('data', data)
           this.incidents = data
 
-          this.sortIncidents(map)
-          //
-          // console.log('this.incidents', this.incidents)
+          this.normalizeIncidents(map)
+
           return data
         })
       },
-      sortIncidents(map){
+      normalizeIncidents(map){
+
+        // {
+        //   "type": "Feature",
+        //   "geometry": {
+        //       "type": "Point",
+        //       "coordinates": ["Longitude", "Latitutude"],
+        //   },
+        //   "properties": {
+        //         "ID": "ID",
+        //         "Incident Type": ["Incident Type 1", "Incident Type 2"],
+        //         "start_date_time": "2017-12-11 00:00:00",
+        //         "end_date_time": "2018-03-26 00:00:00",
+        //         "Incident_Description ": "Description",
+        //         "total_victims": 313,
+        //   }
+        // }
 
         const incidents = this.incidents;
 
-        console.log('incidents sort4ed', incidents)
+        const mapIncidents = [];
+
+
+        // console.log({incidents});
+
 
          const geometry = _.each(incidents, function(incident){
-           return incident.geometry
-         })
-        // console.log('this.inicidents', this.incidents)
 
-        this.incidentLocations = geometry;
+           const types = incident.types.data;
+
+           const incidentTypes =  _.map(types, function(type){
+             return type.name
+           })
+
+           const incidentPoint = {
+               "type": "Feature",
+               "geometry": incident.geometry,
+               "properties": {
+                     "ID": incident.properties.incident_id,
+                     "Incident Type": incidentTypes,
+                     "start_date_time": incident.properties.start_date_time.date,
+                     "end_date_time": incident.properties.end_date_time.date,
+                     "location_details": incident.properties.location_details,
+                     "total_victims": incident.properties.total_victims,
+
+
+               }
+           }
+
+           mapIncidents.push(incidentPoint)
+
+          //  console.log('incidentPoint', incidentPoint);
+         })
+
+        //  console.log({geometry});
+
+        this.incidentLocations = mapIncidents;
 
         this.mapAddSource(map)
-        console.log('incidentLocations', this.incidentLocations)
 
         return geometry
       },
       mapAddSource(map){
-        console.log('map!!', map)
 
-        const geometry = this.incidentLocations;
+        const incidentLocations = this.incidentLocations;
 
-        console.log('geometry', geometry)
+        console.log({incidentLocations});
 
+        // console.log(`hello ${JSON.stringify(incidentLocations,null,2)}`);
 
         map.addSource("markers", {
           "type": "geojson",
           "data": {
               "type": "FeatureCollection",
-              "features": geometry
+              "features": incidentLocations
           }
         });
 
@@ -95,26 +135,12 @@
             "source": "markers",
             "type": "circle",
           });
+
       },
       mapLoaded(map) {
         console.log('Map Loaded!')
 
-        console.log('map', map)
-
-
-        const geometry = this.geometry;
-
-        console.log('geometry', geometry)
-
         this.incidentList(map)
-        // this.mapAddSource(map)
-        // map.addSource("markers", {
-        // "type": "geojson",
-        // "data": {
-        //     "type": "FeatureCollection",
-        //     "features": geometry
-        // }
-    // });
     //     map.addSource("markers", {
     //     "type": "geojson",
     //     "data": {
