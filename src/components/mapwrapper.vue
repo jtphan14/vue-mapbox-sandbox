@@ -2,6 +2,10 @@
   import incidents from 'src/assets/js/incidents'
   import kivumap from './kivumap.vue'
 
+  import { mapGetters } from 'vuex'
+  import { mapMutations } from 'vuex'
+  import { mapActions } from 'vuex'
+  import * as types from '../store/types';
 
   export default {
     props: {
@@ -12,17 +16,47 @@
       }
     },
 
-    computed: {
+    computed:  {
+        value: {
+          get() {
+            return this.$store.getters.value;
+          },
+          set(value) {
+            this.$store.dispatch('updateValue', value)
+          }
+        },
+         ...mapGetters({
+             doubleCounter: types.DOUBLE_COUNTER,
+             stringCounter: types.CLICK_COUNTER
+         }),
     },
+    // mapGetters({
+
+    //   doubleCounters: types.DOUBLE_COUNTER,
+    //   stringCounter: types.CLICK_COUNTER
+    // })
 
     components: {
       kivumap,
     },
     methods: {
-      greet(event){
-        console.log('hi')
-        console.log(event)
+      ...mapActions([
+        'increment',
+        'decrement',
+        'asyncIncrement',
+        'asyncDecrement'
+      ]),
+      updateValue(event) {
+        this.$store.dispatch('updateValue', event.target.value)
       }
+    // {
+    //   increment(event) {
+    //     this.$store.commit('increment')
+    //     // this.$store.state.counter++;
+    //   },
+    //   decrement(event) {
+    //     this.$store.commit('decrement')
+    //   }
     }
   }
 </script>
@@ -31,9 +65,12 @@
   <div class="mapwrapper">
     <div class="map-filters">
       <ul>
-        <a v-on:click="greet" href="#" id="1">Actor 1</a>
-        <a v-on:click="greet" href="#" id="2">Actor 2</a>
-        <a v-on:click="greet" href="#" id="3">Actor 3</a>
+        <a @click="asyncIncrement({by: 50, duration: 500})" href="#" id="1">Actor 1</a>
+        <a @click="asyncDecrement({by: 100, duration: 500})" href="#" id="2">Actor 2</a>
+        <h4>{{doubleCounter}}</h4>
+        <h5>{{stringCounter}}</h5>
+        <input type="text" v-model="value">
+        <p> {{value}}</p>
       </ul>
     </div>
     <kivumap></kivumap>
