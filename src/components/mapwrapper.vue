@@ -15,6 +15,9 @@
       return {
       }
     },
+    mounted() {
+      // incidents.incidentWithoutPromise()
+    },
 
     computed:  {
         value: {
@@ -27,15 +30,10 @@
         },
          ...mapGetters({
              doubleCounter: types.DOUBLE_COUNTER,
-             stringCounter: types.CLICK_COUNTER
+             stringCounter: types.CLICK_COUNTER,
+             incidentLength: types.ALL_INCIDENTS
          }),
     },
-    // mapGetters({
-
-    //   doubleCounters: types.DOUBLE_COUNTER,
-    //   stringCounter: types.CLICK_COUNTER
-    // })
-
     components: {
       kivumap,
     },
@@ -49,14 +47,6 @@
       updateValue(event) {
         this.$store.dispatch('updateValue', event.target.value)
       }
-    // {
-    //   increment(event) {
-    //     this.$store.commit('increment')
-    //     // this.$store.state.counter++;
-    //   },
-    //   decrement(event) {
-    //     this.$store.commit('decrement')
-    //   }
     }
   }
 </script>
@@ -69,6 +59,7 @@
         <a @click="asyncDecrement({by: 100, duration: 500})" href="#" id="2">Actor 2</a>
         <h4>{{doubleCounter}}</h4>
         <h5>{{stringCounter}}</h5>
+        <h4>Incident Length: {{incidentLength}}</h4>
         <input type="text" v-model="value">
         <p> {{value}}</p>
       </ul>

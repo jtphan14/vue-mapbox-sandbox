@@ -2,6 +2,8 @@
   import Mapbox from 'mapbox-gl-vue'
   import Vue from 'vue/dist/vue.js'
   import incidents from 'src/assets/js/incidents'
+  import { mapActions } from 'vuex'
+
   const _ = require('lodash');
 
   // import incidentComponent from './incident.vue'
@@ -35,6 +37,9 @@
       // self.incidentList();
     },
     methods: {
+      ...mapActions([
+        'asyncUpdateIncidents',
+      ]),
       incidentList(map){
 
         incidents.getIncidents();
@@ -46,6 +51,8 @@
           const { data } = response
 
           this.incidents = data
+
+          this.asyncUpdateIncidents(data)
 
           this.normalizeIncidents(map)
 
@@ -62,14 +69,7 @@
            const types  = incident.types.data;
            const actors = incident.actors.data;
 
-           const incidentTypes =  _.map(types, function(type){
-             return type.name
-           })
-          //  
-          //  const actors =  _.map(actors, function(actors){
-          //    return type.name
-          //  })
-
+           const incidentTypes = types.map( type => type.name)
 
           //  const incidentPoint = {
           //      "type": "Feature",
@@ -95,8 +95,8 @@
                      "end_date_time": incident.properties.end_date_time.date,
                      "location_details": incident.properties.location_details,
                      "total_victims": incident.properties.total_victims,
-                     "primary_incident_type" : "Rape",
-                    //  "primary_incident_type" : incidentTypes[0],
+                    //  "primary_incident_type" : "Rape",
+                     "primary_incident_type" : incidentTypes[0],
                      "verification_rating" : incident.properties.verification_rating
                }
            }

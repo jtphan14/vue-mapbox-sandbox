@@ -44,3 +44,8 @@ new Vue({
 //     }
 //   }
 // }
+
+//Filter Data without click event using state
+//Update filters
+//Update map to use criteria as state
+//Add click event filters

@@ -11,6 +11,10 @@ const getters = {
   [types.CLICK_COUNTER]: state => {
    return state.counter + "Clicks";
   },
+  [types.COUNTER]: state => {
+   return state.counter + "Clicks";
+  },
+
 };
 
 const mutations = {
