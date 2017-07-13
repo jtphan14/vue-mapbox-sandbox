@@ -3,6 +3,8 @@
   import Vue from 'vue/dist/vue.js'
   import incidents from 'src/assets/js/incidents'
   import { mapActions } from 'vuex'
+  import { mapGetters } from 'vuex'
+  import * as types from '../store/types';
 
   const _ = require('lodash');
 
@@ -31,15 +33,23 @@
     components: {
       'mapbox': Mapbox
     },
+    computed: {
+      ...mapGetters({
+          normalizedIncidents: types.NORMALIZED_INCIDENTS,
+          map: types.MAP,
+      })
+    },
     created() {
       let self = this;
 
       // self.incidentList();
     },
     methods: {
-      ...mapActions([
-        'asyncUpdateIncidents',
-      ]),
+      ...mapActions({
+        asyncUpdateIncidents: types.ASYNCUPDATEINCIDENTS,
+        asyncUpdateNormalizedIncidents: types.ASYNCUPDATE_NORMALIZED_INCIDENTS,
+        asyncUpdateMap: types.ASYNCUPDATE_MAP
+      }),
       incidentList(map){
 
         incidents.getIncidents();
@@ -106,15 +116,28 @@
        })
 
         //  console.log({geometry});
+        this.asyncUpdateNormalizedIncidents(mapIncidents)
 
         this.incidentLocations = mapIncidents;
 
-        this.mapAddSource(map)
+        this.mapAddSource(this.map)
 
       },
-      mapAddSource(map){
+      mapUpdateSource(map){
+        const incidentLocations = this.normalizedIncidents;
 
-        const incidentLocations = this.incidentLocations;
+        console.log('mapittymap', map);
+
+        const mapSource = map.getSource('markers')
+
+        console.log('mapSource', mapSource);
+        map.removeSource("markers")
+        map.removeLayer("markers")
+      },
+      mapAddSource(map){
+        // console.log('map', map);
+        // console.log('mapstate', this.map);
+        const incidentLocations = this.normalizedIncidents;
 
         console.log({incidentLocations});
 
@@ -166,6 +189,8 @@
       },
       mapLoaded(map) {
         console.log('Map Loaded!')
+
+        this.asyncUpdateMap(map)
 
         this.incidentList(map)
         // map.addLayer({
@@ -318,6 +343,9 @@
 
 <template>
   <div id="map" class="map">
+    <h1>
+      <a @click="mapUpdateSource(map)" href="#" id="1">Remove Map Source</a>
+    </h1>
     <mapbox
     @map-load="mapLoaded"
     @map-addSource="mapAddSource"
