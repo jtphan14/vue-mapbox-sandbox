@@ -18,5 +18,5 @@ export const SET_MAP                              = 'incident/SET_MAP'
 //Actions
 export const ASYNCUPDATEINCIDENTS                = 'incident/ASYNCUPDATEINCIDENTS'
 export const ASYNCUPDATE_NORMALIZED_INCIDENTS    = 'incident/ASYNCUPDATE_NORMALIZED_INCIDENTS'
-export const ASYNCUPDATED_FILTERED_INCIDENTS     = 'incident/ASYNCUPDATED_FILTERED_INCIDENTS'
+export const ASYNCUPDATE_FILTERED_INCIDENTS     = 'incident/ASYNCUPDATED_FILTERED_INCIDENTS'
 export const ASYNCUPDATE_MAP                     = 'incident/ASYNCUPDATE_MAP'
