@@ -41,14 +41,15 @@
     },
     created() {
       let self = this;
-
       // self.incidentList();
     },
     methods: {
       ...mapActions({
         asyncUpdateIncidents: types.ASYNCUPDATEINCIDENTS,
         asyncUpdateNormalizedIncidents: types.ASYNCUPDATE_NORMALIZED_INCIDENTS,
-        asyncUpdateMap: types.ASYNCUPDATE_MAP
+        asyncUpdateMap: types.ASYNCUPDATE_MAP,
+        asyncUpdateFilteredIncidents: types.ASYNCUPDATE_FILTERED_INCIDENTS,
+
       }),
       incidentList(map){
 
@@ -117,6 +118,7 @@
 
         //  console.log({geometry});
         this.asyncUpdateNormalizedIncidents(mapIncidents)
+        this.asyncUpdateFilteredIncidents(mapIncidents)
 
         this.incidentLocations = mapIncidents;
 
@@ -184,6 +186,7 @@
                   ]
                 },
             }
+
           });
 
       },
@@ -343,9 +346,6 @@
 
 <template>
   <div id="map" class="map">
-    <h1>
-      <a @click="mapUpdateSource(map)" href="#" id="1">Remove Map Source</a>
-    </h1>
     <mapbox
     @map-load="mapLoaded"
     @map-addSource="mapAddSource"
@@ -357,7 +357,6 @@
       /*style: 'mapbox://styles/mapbox/streets-v8',*/
       //Fifty and Fifty Style
       style: 'mapbox://styles/fiftyandfifty/cj3xi1sjt1kdh2rmzd0rngkpu',
-      zoom: 12,
       center: [-122.447303, 37.753574]
     }">
   </mapbox>
