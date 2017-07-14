@@ -7,7 +7,7 @@
       <router-link to="/about">About</router-link>
     </div>
     <div class="link">
-      <router-link to="/kivumap">Map</router-link>
+      <router-link to="/mapwrapper">Map</router-link>
     </div>
   </div>
 </template>

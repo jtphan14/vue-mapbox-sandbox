@@ -1,18 +1,23 @@
 <script>
   import navComponent from './components/nav.vue'
   import logo from 'images/logo.png'
+  import incidents from 'src/assets/js/incidents'
 
   export default {
     props: {
       message: {
         type: String,
         default: 'You\'ve made it!'
+      },
+      data: {
+        type: Array
       }
     },
 
     data () {
       return {
         logo,
+        incidents: ''
       }
     },
 
@@ -22,6 +27,8 @@
 
     components: {
       navComponent,
+    },
+    methods: {
     }
   }
 </script>
