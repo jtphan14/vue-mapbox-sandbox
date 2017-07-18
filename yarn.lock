@@ -3823,6 +3823,10 @@ istanbul@^0.4.0:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
+jQuery@^1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/jQuery/-/jQuery-1.7.4.tgz#f32dc5c85a7044ee864b4443b9ee45f9478ba137"
+
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
@@ -4401,6 +4405,10 @@ map-obj@^1.0.0, map-obj@^1.0.1:
 mapbox-gl-supported@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mapbox-gl-supported/-/mapbox-gl-supported-1.2.0.tgz#cbd34df894206cadda9a33c8d9a4609f26bb1989"
+
+mapbox-gl-vue@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/mapbox-gl-vue/-/mapbox-gl-vue-1.4.0.tgz#4391b4a886459466faf00cd62044beca1f8bae3b"
 
 mapbox-gl@^0.37.0:
   version "0.37.0"
@@ -7133,12 +7141,6 @@ vue-build@^0.50.0:
     webpack-merge "^4.1.0"
     whatwg-fetch "^2.0.3"
     yargs "^6.6.0"
-
-vue-chart-js@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/vue-chart-js/-/vue-chart-js-1.1.0.tgz#e6e070386bc139d351c5cb73aa660f815e6b80da"
-  dependencies:
-    chart.js "^2.6.0"
 
 vue-chartjs@^2.7.1:
   version "2.7.1"

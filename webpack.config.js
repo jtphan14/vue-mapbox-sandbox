@@ -1,4 +1,6 @@
 var projectRoot = process.cwd()
+const webpack = require('webpack');
+
 
 // Overriding default base webpack config
 module.exports = {
@@ -11,5 +13,12 @@ module.exports = {
       'js': projectRoot + '/src/assets/js',
       // vue: 'vue/dist/vue.js'
     }
-  }
+  },
+  plugins: [
+    // new webpack.ProvidePlugin({
+    //     $: "jquery",
+    //     jQuery: "jquery",
+    //     // "window.jQuery": "jquery"
+    // }),
+  ]
 }
