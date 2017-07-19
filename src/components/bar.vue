@@ -47,67 +47,83 @@ export default HorizontalBar.extend({
         maintainAspectRatio: false,
         tooltips: {
             enabled: false,
-            custom: function(tooltip) {
-              var tooltipEl = $('#chartjs-tooltip');
-              if (!tooltipEl[0]) {
-                $('body').append('<div id="chartjs-tooltip"></div>');
-                tooltipEl = $('#chartjs-tooltip');
-              }
-              // Hide if no tooltip
-              if (!tooltip.opacity) {
-                tooltipEl.css({
-                  opacity: 0
-                });
-                $('.chartjs-wrap canvas').each(function(index, el) {
-                  $(el).css('cursor', 'default');
-                });
-                return;
-              }
-              $(this._chart.canvas).css('cursor', 'pointer');
-              // Set caret Position
-              tooltipEl.removeClass('above below no-transform');
-              if (tooltip.yAlign) {
-                tooltipEl.addClass(tooltip.yAlign);
-              } else {
-                tooltipEl.addClass('no-transform');
-              }
-              // Set Text
-              if (tooltip.body) {
-                var innerHtml = [
-                  (tooltip.beforeTitle || []).join('\n'), (tooltip.title || []).join('\n'), (tooltip.afterTitle || []).join('\n'), (tooltip.beforeBody || []).join('\n'), (tooltip.body || []).join('\n'), (tooltip.afterBody || []).join('\n'), (tooltip.beforeFooter || [])
-                  .join('\n'), (tooltip.footer || []).join('\n'), (tooltip.afterFooter || []).join('\n')
-                ];
-                tooltipEl.html(innerHtml.join('\n'));
-              }
-              // Find Y Location on page
-              var top = 0;
+            custom: function(tooltipModel) {
 
-              if (tooltip.yAlign) {
-                var ch = 0;
-                if (tooltip.caretHeight) {
-                  ch = tooltip.caretHeight;
-                }
-                if (tooltip.yAlign == 'above') {
-                  top = tooltip.y - ch - tooltip.caretPadding;
-                } else {
-                  top = tooltip.y + ch + tooltip.caretPadding;
-                }
-              }
+              // console.log('tooltipModel', tooltipModel);
+               // Tooltip Element
+               var tooltipEl = document.getElementById('chartjs-tooltip');
 
-              var position = $('#chart-area2').offset(); /* location within document */
+              //  console.log('tooltipEl', tooltipEl);
+               // Create element on first render
+               if (!tooltipEl) {
+                   tooltipEl = document.createElement('div');
+                   tooltipEl.id = 'chartjs-tooltip';
+                   tooltipEl.innerHTML = "<table></table>"
+                   document.body.appendChild(tooltipEl);
+               }
 
-              // Display, position, and set styles for font
-              tooltipEl.css({
-                opacity: 1,
-                width: tooltip.width ? (tooltip.width + 'px') : 'auto',
-                left: position.left + tooltip.x + 'px',
-                top: position.top + top + 'px',
-                fontFamily: tooltip._fontFamily,
-                fontSize: tooltip.fontSize,
-                fontStyle: tooltip._fontStyle,
-                padding: tooltip.yPadding + 'px ' + tooltip.xPadding + 'px',
-              });
-            }
+               // Hide if no tooltip
+               if (tooltipModel.opacity === 0) {
+                   tooltipEl.style.opacity = 0;
+                   return;
+               }
+
+               // Set caret Position
+               tooltipEl.classList.remove('above', 'below', 'no-transform');
+               if (tooltipModel.yAlign) {
+                   tooltipEl.classList.add(tooltipModel.yAlign);
+               } else {
+                   tooltipEl.classList.add('no-transform');
+               }
+
+               function getBody(bodyItem) {
+                   return bodyItem.lines;
+               }
+
+               // Set Text
+               if (tooltipModel.body) {
+                   var titleLines = tooltipModel.title || [];
+                   var bodyLines = tooltipModel.body.map(getBody);
+
+                   var innerHtml = '<thead>';
+
+                   titleLines.forEach(function(title) {
+                       innerHtml += '<tr><th>' + title + '</th></tr>';
+                   });
+                   innerHtml += '</thead><tbody>';
+
+                   bodyLines.forEach(function(body, i) {
+                       var colors = tooltipModel.labelColors[i];
+                       var style = 'background:' + colors.backgroundColor;
+                       style += '; border-color:' + colors.borderColor;
+                       style += '; border-width: 2px';
+                       var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                       innerHtml += '<tr><td>' + span + body + '</td></tr>';
+                   });
+                   innerHtml += '</tbody>';
+
+                   var tableRoot = tooltipEl.querySelector('table');
+                   tableRoot.innerHTML = innerHtml;
+               }
+
+               // `this` will be the overall tooltip
+               var position = this._chart.canvas.getBoundingClientRect();
+
+              //  console.log('position', position);
+
+              console.log('tooltipModel.caretX', tooltipModel.caretX);
+              console.log('tooltipModel.caretY', tooltipModel.caretY);
+               // Display, position, and set styles for font
+               tooltipEl.style.opacity = 1;
+               tooltipEl.style.left = position.left + tooltipModel.caretX + 'px';
+               tooltipEl.style.top = position.top + tooltipModel.caretY + 'px';
+               tooltipEl.style.fontFamily = tooltipModel._fontFamily;
+               tooltipEl.style.fontSize = tooltipModel.fontSize;
+               tooltipEl.style.fontStyle = tooltipModel._fontStyle;
+               tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+
+               console.log('tooltipEl', tooltipEl);
+           }
         }
       }
     }
