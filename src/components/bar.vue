@@ -29,7 +29,7 @@ const { reactiveProp } = mixins
 
 
 export default HorizontalBar.extend({
-  // mixins: [reactiveProp],
+  mixins: [reactiveProp],
   data(){
     return {
       graphData: {
@@ -130,7 +130,7 @@ export default HorizontalBar.extend({
   },
   mounted () {
     // Overwriting base render method with actual data.
-    this.renderChart(this.graphData, this.options)
+    this.renderChart(this.chartData, this.options)
   }
 })
 </script>
