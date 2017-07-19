@@ -1,6 +1,10 @@
 <script>
 
 import Bar from './bar.vue'
+import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
+import * as types from '../store/types';
+
 
 export default {
   components: {
@@ -8,34 +12,72 @@ export default {
   },
   data () {
     return {
-      datacollection: null
+      datacollection: null,
+      incidents: []
     }
   },
   mounted () {
-    },
-    methods: {
-      fillData () {
-        console.log('fillData');
+    this.fillData()
+  },
+  computed: {
+    ...mapGetters({
+        allIncidents: types.ALL_INCIDENTS,
+        filteredIncidents: types.FILTERED_INCIDENTS,
+    })
+  },
+  methods: {
+    getActors(){
+      const incidents  = this.allIncidents;
 
-        this.datacollection = {
-          labels: [this.getRandomInt(), this.getRandomInt()],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }, {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [this.getRandomInt(), this.getRandomInt()]
-            }
-          ]
-        }
-      },
-      getRandomInt () {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+      //Get List of Primary Perpetrators
+
+      console.log('incidents', incidents);
+
+      // Armed Groups by Incident Type
+
+
+      // Restructure data to look like this.
+      // $data =  [
+      //     'FDRC' => [
+      //         'murders' => 34
+      //         'rapes' => 2
+      //     ],
+      //     'ADF' => [
+      //         'murders' => 34
+      //         'rapes' => 2
+      //     ]
+      // ];
+
+      // Iterate through each incident.
+      // 1. Get primary Perpetrator
+      // 2. Iterate through each incident types
+            // 2a. Get total victims per incident types
+            // 2b. Add total victim count to armed group w/ incident type total count.
+
+    },
+    fillData () {
+      console.log('fillData');
+
+      this.getActors();
+      this.datacollection = {
+        labels: ["1900", "1950", "1999", "2050"],
+        datasets: [{
+            label: "Europe",
+            backgroundColor: "rgba(0,0,0,0.2)",
+            data: [408,547,675,734],
+          }, {
+            label: "Africa",
+            backgroundColor: "rgba(0,0,0,0.2)",
+            backgroundColorHover: "#3e95cd",
+            data: [133,221,783,2478]
+          }
+        ]
       }
+    },
+    getRandomInt () {
+      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
     }
+  }
 
 }
 </script>

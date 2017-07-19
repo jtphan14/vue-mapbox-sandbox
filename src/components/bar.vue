@@ -111,8 +111,8 @@ export default HorizontalBar.extend({
 
               //  console.log('position', position);
 
-              console.log('tooltipModel.caretX', tooltipModel.caretX);
-              console.log('tooltipModel.caretY', tooltipModel.caretY);
+              // console.log('tooltipModel.caretX', tooltipModel.caretX);
+              // console.log('tooltipModel.caretY', tooltipModel.caretY);
                // Display, position, and set styles for font
                tooltipEl.style.opacity = 1;
                tooltipEl.style.left = position.left + tooltipModel.caretX + 'px';
@@ -122,7 +122,7 @@ export default HorizontalBar.extend({
                tooltipEl.style.fontStyle = tooltipModel._fontStyle;
                tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
 
-               console.log('tooltipEl', tooltipEl);
+              //  console.log('tooltipEl', tooltipEl);
            }
         }
       }
