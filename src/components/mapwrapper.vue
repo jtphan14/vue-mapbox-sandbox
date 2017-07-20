@@ -1,6 +1,7 @@
 <script>
   import incidents from 'src/assets/js/incidents'
   import kivumap from './kivumap.vue'
+  import filterOptions from './filterOptions.vue'
 
   import { mapGetters } from 'vuex'
   import { mapMutations } from 'vuex'
@@ -39,6 +40,7 @@
     },
     components: {
       kivumap,
+      filterOptions
     },
     methods: {
       ...mapActions({
@@ -119,15 +121,12 @@
 
 <template>
   <div class="mapwrapper">
-    <div class="map-filters">
-      <ul>
-        <a @click="removeMapSource" href="#" id="1">Remove Map Source</a>
-        <a @click="addMapSource" href="#" id="2">Add Map Source</a>
-        <a @click="filterBy('Rape')" href="#" id="2">Rapes :( </a>
-        <a @click="filterBy('Violent Deaths')" href="#" id="2">Violent Deaths :( </a>
-        <a @click="filterBy('All')" href="#" id="2">All Incidents</a>
-      </ul>
+    <filterOptions></filterOptions>
+
+    <div class="main-content">
+      <transition name="fade" mode="out-in" appear>
+        <kivumap></kivumap>
+      </transition>
     </div>
-    <kivumap></kivumap>
   </div>
 </template>

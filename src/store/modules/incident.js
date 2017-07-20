@@ -9,7 +9,7 @@ const state = {
 
 const getters = {
   [types.ALL_INCIDENTS]: state => {
-    return state.incidents.length;
+    return state.incidents;
   },
   [types.NORMALIZED_INCIDENTS]: state => {
     return state.normalized_incidents;

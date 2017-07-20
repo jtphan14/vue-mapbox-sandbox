@@ -50,6 +50,11 @@ h1, h2, h3, h4, h5 { margin: 0 0 10px 0; }
     .tagline {
       font-size: 18px;
     }
+    .link {
+      display: inline-block;
+      padding: 10px;
+      float: left;
+    }
   }
 
   .main {
@@ -88,10 +93,48 @@ h1, h2, h3, h4, h5 { margin: 0 0 10px 0; }
     // background-color: blue;
     width: 200px;
   }
+
   // .vue-popup{
   //   width: 150px;
   //   color: black;
   //   font-size: 10px;
   //   font-weight: 400;
   // }
+}
+#chartjs-tooltip {
+  opacity: 1;
+  position: absolute;
+  background: rgba(0, 0, 0, .5);
+  color: blue;
+  border-radius: 3px;
+  -webkit-transition: all .1s ease;
+  transition: all .1s ease;
+  pointer-events: none;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+.chartjs-tooltip-key {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.nav-menu{
+  position: fixed;
+  top: 120px;
+  left: 0;
+  width: 300px;
+  height: calc(100vh - 120px);
+  ul{
+    a{
+      display: block;
+      padding: 10px;
+    }
+  }
+}
+
+.main-content{
+    // position: relative;
+    min-height: 300px;
+    margin: 0 0 0 300px;
 }

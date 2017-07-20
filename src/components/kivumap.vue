@@ -63,6 +63,8 @@
 
           this.incidents = data
 
+          console.log('{data}', {data});
+
           this.asyncUpdateIncidents(data)
 
           this.normalizeIncidents(map)

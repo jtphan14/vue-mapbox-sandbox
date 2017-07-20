@@ -1,6 +1,8 @@
 import welcome from './components/welcome.vue'
 import about from './components/about.vue'
 import mapwrapper from './components/mapwrapper.vue'
+import graph from './components/graph.vue'
+import filterOptions from './components/filterOptions.vue'
 
 export default {
   mode: 'history',
@@ -9,6 +11,8 @@ export default {
   routes: [
     {path: '/', component: welcome},
     {path: '/about', component: about},
-    {path: '/mapwrapper', component: mapwrapper}
+    {path: '/graph', component: graph},
+    {path: '/mapwrapper', component: mapwrapper},
+    {path: '/filterOptions', component: filterOptions}
   ]
 }

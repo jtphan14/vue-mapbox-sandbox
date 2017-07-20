@@ -36,13 +36,11 @@
 <template>
   <div id="app">
     <div class="header">
+      <navComponent />
     </div>
     <div class="main">
-      <navComponent />
       <div class="content">
-        <transition name="fade" mode="out-in" appear>
           <router-view></router-view>
-        </transition>
       </div>
     </div>
   </div>
