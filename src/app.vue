@@ -40,9 +40,7 @@
     </div>
     <div class="main">
       <div class="content">
-        <transition name="fade" mode="out-in" appear>
           <router-view></router-view>
-        </transition>
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 <script>
 
 import Bar from './bar.vue'
+import filterOptions from './filterOptions.vue'
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
 import * as types from '../store/types';
@@ -8,7 +9,8 @@ import * as types from '../store/types';
 
 export default {
   components: {
-    Bar
+    Bar,
+    filterOptions
   },
   data () {
     return {
@@ -84,15 +86,10 @@ export default {
 
 <template>
   <div class="graphwrapper">
-    <div class='graph-filters'>
-      <ul>
-        <a href="#" id="2">Rapes :( </a>
-        <a href="#" id="2">Violent Deaths :( </a>
-        <a href="#" id="2">All Incidents</a>
-        <a @click="fillData()" href="#" id="2">Random Integers</a>
-      </ul>
+    <filterOptions></filterOptions>
+    <div class="main-content">
+      <h1>Graph</h1>
+      <bar :chart-data="datacollection"></bar>
     </div>
-    <h1>Graph</h1>
-    <bar :chart-data="datacollection"></bar>
   </div>
 </template>
